@@ -34,8 +34,7 @@
     "test": "npm run lint && npm run mocha && npm run test:types",
     "test:types": "tsd",
     "coverage": "codecov",
-    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build",
-    "publish": "node ./src/publish.js"
+    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build"
   },
   "repository": "slackapi/bolt",
   "homepage": "https://slack.dev/bolt-js",

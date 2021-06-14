@@ -25,4 +25,4 @@ jobs:
       - name: install deps
         run: npm install
       - name: Runs the publish script
-        run: npm run publish
+        run: node src/publish.js
