@@ -21,8 +21,8 @@ jobs:
       - name: Checkout current project
         uses: actions/checkout@v2
       - name: sets up nodejs runtime
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
       - name: install deps
-        uses: npm install
+        run: npm install
       - name: Runs the publish script
-        uses: npm run publish
+        run: npm run publish
