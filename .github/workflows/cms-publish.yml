@@ -10,8 +10,9 @@ on:
     branches: [ sj_cms-workflow, main ]   # testing only
     paths:
     # trigger on changes matching paths:
-      - 'docs/**'
-
+    - 'docs/**'
+  workflow_dispatch:
+    
 jobs:   
   publish:
     runs-on: macos-latest
