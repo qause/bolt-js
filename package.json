@@ -17,6 +17,7 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist/**/*"
   ],
@@ -33,7 +34,8 @@
     "test": "npm run lint && npm run mocha && npm run test:types",
     "test:types": "tsd",
     "coverage": "codecov",
-    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build"
+    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build",
+    "publish": "node ./src/publish.js"
   },
   "repository": "slackapi/bolt",
   "homepage": "https://slack.dev/bolt-js",
@@ -51,6 +53,8 @@
     "@types/promise.allsettled": "^1.0.3",
     "@types/tsscmp": "^1.0.0",
     "axios": "^0.21.1",
+    "contentful-management": "^7.24.0",
+    "dotenv": "^10.0.0",
     "express": "^4.16.4",
     "please-upgrade-node": "^3.2.0",
     "promise.allsettled": "^1.0.2",

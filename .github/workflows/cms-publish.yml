@@ -12,11 +12,17 @@ on:
     # trigger on changes matching paths:
     - 'docs/**'
   workflow_dispatch:
-    
+
 jobs:   
   publish:
     runs-on: macos-latest
     steps:
       # testing only
-      - name: Run a one-line script
-        run: echo Hello World, I am published!
+      - name: Checkout current project
+        uses: actions/checkout@v2
+      - name: sets up nodejs runtime
+        uses: actions/setup-node@v1
+      - name: install deps
+        uses: npm install
+      - name: Runs the publish script
+        uses: npm run publish
