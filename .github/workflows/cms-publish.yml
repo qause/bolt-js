@@ -2,17 +2,17 @@
 # For more information, see our main DevTools docs migration project @
 # https://paper.dropbox.com/doc/DevTools-docs-migration--BMeZ~P1MCa~mn~mlMIED371eAg-iSKF6HsbGzWnUJyZm3QPk
 
-name: publish-to-cms
+name: Publish to CMS
 
 # workflow triggers
 on:
-  paths:
-  # trigger on changes matching paths:
-    - 'docs/**'
   push:
     branches: 
       - sj_cms-workflow   # testing only
       - main
+    paths:
+    # trigger on changes matching paths:
+      - 'docs/**'
   workflow_dispatch:    
 
 jobs:   
