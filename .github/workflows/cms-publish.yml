@@ -11,7 +11,6 @@ on:
     paths:
     # trigger on changes matching paths:
       - 'docs/**'
-  workflow_dispatch:    
 
 jobs:   
   publish:
