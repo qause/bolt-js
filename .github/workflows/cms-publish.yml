@@ -1,0 +1,24 @@
+# This workflow will eventually handle publishing changes within /docs to Contentful CMS. 
+# For more information, see our main DevTools docs migration project @
+# https://paper.dropbox.com/doc/DevTools-docs-migration--BMeZ~P1MCa~mn~mlMIED371eAg-iSKF6HsbGzWnUJyZm3QPk
+
+name: publish-to-cms
+
+# workflow triggers
+on:
+  paths:
+  # trigger on changes matching paths:
+    - 'docs/**'
+  push:
+    branches: 
+      - sj_cms-workflow   # testing only
+      - main
+  workflow_dispatch:    
+
+jobs:   
+  publish:
+    runs-on: macos-latest
+    steps:
+      # testing only
+      - name: Run a one-line script
+        run: echo Hello World, I am published!
