@@ -5,4 +5,5 @@ Another test.
 Another.
 Grant access to env variables.
 Check for not null.
-Testing with script
+Testing with script.
+Test with with syntax
