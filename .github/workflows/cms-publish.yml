@@ -25,6 +25,7 @@ jobs:
       - name: install deps
         run: npm install
       - name: Runs the publish script
-        with: 
+        env: 
           CONTENTFUL_API_TOKEN: ${{ secrets.CONTENTFUL_API_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run publish
