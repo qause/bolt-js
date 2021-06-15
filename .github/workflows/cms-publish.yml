@@ -27,4 +27,5 @@ jobs:
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_TOKEN: ${{ secrets.CONTENTFUL_API_TOKEN }} 
+          OTHER_STUFF: "This is another test variable"
         run: node src/publish.js
