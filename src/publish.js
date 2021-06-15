@@ -8,7 +8,7 @@
 import 'dotenv/config';
 import contentful from 'contentful-management';
 
-console.log('TEST: HAS API TOKEN:', process.env.CONTENTFUL_API_TOKEN !== undefined, process.env.CONTENTFUL_API_TOKEN !== null, process.env);
+console.log('TEST: HAS API TOKEN:', process.env.CONTENTFUL_API_TOKEN !== undefined, process.env.CONTENTFUL_API_TOKEN !== null);
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_TOKEN
 });
