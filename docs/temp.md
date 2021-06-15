@@ -3,4 +3,5 @@ Testing stuff.
 Testing changes. 
 Another test.
 Another.
-Grant access to env variables
+Grant access to env variables.
+Check for not null.
