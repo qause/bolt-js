@@ -7,3 +7,4 @@ Grant access to env variables.
 Check for not null.
 Testing with script.
 Test with with syntax
+Test with github token
