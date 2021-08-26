@@ -9,16 +9,18 @@
 import contentful from 'contentful-management';
 
 // has variables
-console.log(process.env.SHA);
-console.log(process.env.ACTOR);
-console.log(process.env.REPOSITORY);
-console.log(process.env.EVENT);
-console.log(process.env.FILES_CHANGED);
+// console.log(process.env.SHA);
+// console.log(process.env.ACTOR);
+// console.log(process.env.REPOSITORY);
+// console.log(process.env.EVENT);
+// console.log(process.env.FILES_CHANGED);
 
 // get files changed
-const regx = new RegExp('^docs\/.*')
-const files = process.env.FILES_CHANGED.split(' ').filter(ele => regx.test(ele))
-console.log('Changed files: \n', files);
+const regx = new RegExp('^docs/.*')
+let files = process.env.FILES_CHANGED.split(' ');
+console.log('Before filter: \n', files);
+files = files.filter(str => regx.test(str))
+console.log('Filtered files: \n', files);
 
 // set up client 
 const client = contentful.createClient({
