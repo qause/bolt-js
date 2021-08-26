@@ -33,9 +33,6 @@ jobs:
         id: getfile
         run: |
           echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
-      - name: echo output
-        run: |
-          echo ${{ steps.getfile.outputs.files }}
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 
@@ -44,4 +41,5 @@ jobs:
           ACTOR: ${{ github.actor }}
           REPOSITORY: ${{ github.repository }}
           EVENT: ${{ toJson(github.event) }}
+          FILES_CHANGED: ${{ toJson(steps.getfile.outputs.files) }}
         run: npm run publish

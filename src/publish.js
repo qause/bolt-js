@@ -1,7 +1,7 @@
 /* 
   This script is responsible for: 
   - Triggered by GA workflow
-  - Connecting with contentful API ✅
+  - Connecting with contentful API
   - Accomplishes a simple update action 
   - Runs a secondary parse script
  */
@@ -13,6 +13,10 @@ console.log(process.env.SHA);
 console.log(process.env.ACTOR);
 console.log(process.env.REPOSITORY);
 console.log(process.env.EVENT);
+console.log(process.env.FILES_CHANGED);
+
+// check files changed
+console.log('type of: ', typeof process.env.FILES_CHANGED)
 
 // set up client 
 const client = contentful.createClient({
