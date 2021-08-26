@@ -16,4 +16,3 @@ This is to  test env vars
 env2
 env3
 
-env vars and git config
