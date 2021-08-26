@@ -30,5 +30,5 @@ jobs:
           SHA: ${{ github.sha }}
           ACTOR: ${{ github.actor }}
           REPOSITORY: ${{ github.repository }}
-          EVENT: ${{ github.event }}
+          EVENT: ${{ toJson(github.event) }}
         run: npm run publish
