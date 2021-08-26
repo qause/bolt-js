@@ -29,7 +29,7 @@ jobs:
           git config user.email "<>"
       - name: get changed files
         run: |
-          echo git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
+          git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 
