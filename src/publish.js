@@ -16,7 +16,7 @@ import contentful from 'contentful-management';
 // console.log(process.env.FILES_CHANGED);
 
 // get files changed
-const regx = new RegExp('^docs/.*')
+const regx = new RegExp('^docs\/.*')
 let files = process.env.FILES_CHANGED.split(' ');
 console.log('Before filter: \n', files);
 files = files.filter(str => regx.test(str))
