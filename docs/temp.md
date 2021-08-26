@@ -13,3 +13,4 @@ MORE STUFF!
 Test remove dotenv
 
 This is to  test env vars
+env2
