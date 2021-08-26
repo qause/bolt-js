@@ -15,8 +15,10 @@ console.log(process.env.REPOSITORY);
 console.log(process.env.EVENT);
 console.log(process.env.FILES_CHANGED);
 
-// check files changed
-console.log('type of: ', typeof process.env.FILES_CHANGED)
+// get files changed
+const regx = new RegExp('^docs\/.*')
+const files = process.env.FILES_CHANGED.split(' ').filter(ele => regx.test(ele))
+console.log('Changed files: \n', files);
 
 // set up client 
 const client = contentful.createClient({
