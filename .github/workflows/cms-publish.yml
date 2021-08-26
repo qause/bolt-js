@@ -18,6 +18,10 @@ jobs:
     runs-on: macos-latest
     steps:
       # testing only
+      - name: Get env vars 
+        run: echo {{ env.GITHUB_WORKFLOW \n env.GITHUB_ACTOR \n env.GITHUB_REPOSITORY \n env.GITHUB_SHA \n }}
+      - name: Get changed files
+        run: git diff-tree --no-commit-id --name-only -r {{ env.GITHUB_SHA }}
       - name: Checkout current project
         uses: actions/checkout@v2
       - name: sets up nodejs runtime
