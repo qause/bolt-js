@@ -21,7 +21,7 @@ jobs:
       - name: Get env vars 
         env: 
           GITHUB_SHA: ${{github.sha}}
-        run: echo "$GITHUB_SHA""
+        run: echo "$GITHUB_SHA"
       # - name: Get changed files
       #   run: git diff-tree --no-commit-id --name-only -r {{ github.sha }}
       - name: Checkout current project
