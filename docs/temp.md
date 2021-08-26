@@ -16,3 +16,4 @@ This is to  test env vars
 env2
 env3
 
+Test template

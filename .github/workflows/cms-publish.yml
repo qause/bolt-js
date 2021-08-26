@@ -17,18 +17,12 @@ jobs:
   publish:
     runs-on: macos-latest
     steps:
-      # - name: Get changed files
-      #   run: git diff-tree --no-commit-id --name-only -r {{ github.sha }}
       - name: Checkout current project
         uses: actions/checkout@v2
       - name: sets up nodejs runtime
         uses: actions/setup-node@v2
       - name: install deps
         run: npm install
-      # - name: setup git config
-      #   run: |
-      #     git config user.name
-      #     git config user.email "<>"
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 
