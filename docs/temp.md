@@ -20,3 +20,4 @@ Test template
 Fix
 Add git config
 Pipe
+adjust fetch depth

@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout current project
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: sets up nodejs runtime
         uses: actions/setup-node@v2
       - name: install deps
