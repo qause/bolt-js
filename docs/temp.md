@@ -19,3 +19,4 @@ env3
 Test template
 Fix
 Add git config
+add git diff tree command
