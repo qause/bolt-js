@@ -23,6 +23,10 @@ jobs:
         uses: actions/setup-node@v2
       - name: install deps
         run: npm install
+      - name: setup git config
+        run: |
+          git config user.name "Content Management Bot"
+          git config user.email "<>"
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 
