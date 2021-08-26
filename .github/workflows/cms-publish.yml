@@ -17,11 +17,6 @@ jobs:
   publish:
     runs-on: macos-latest
     steps:
-      # testing only
-      - name: Get env vars 
-        env: 
-          GITHUB_SHA: ${{github.sha}}
-        run: echo "$GITHUB_SHA"
       # - name: Get changed files
       #   run: git diff-tree --no-commit-id --name-only -r {{ github.sha }}
       - name: Checkout current project
@@ -30,8 +25,16 @@ jobs:
         uses: actions/setup-node@v2
       - name: install deps
         run: npm install
+      - name: setup git config
+        run: |
+          git config user.name
+          git config user.email "<>"
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
+          SHA: ${{ github.sha }}
+          ACTOR: ${{ github.actor }}
+          REPOSITORY: ${{ github.repository }}
+          EVENT: ${{ github.event }}
         run: npm run publish

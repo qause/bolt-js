@@ -8,7 +8,13 @@
 // import 'dotenv/config';
 import contentful from 'contentful-management';
 
-console.log('TEST: HAS API TOKEN:', process.env.CONTENTFUL_API_KEY !== undefined, process.env.CONTENTFUL_API_KEY !== null);
+// has variables
+console.log(process.env.SHA);
+console.log(process.env.ACTOR);
+console.log(process.env.REPOSITORY);
+console.log(process.env.EVENT);
+
+// set up client 
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_KEY
 });
