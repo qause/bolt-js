@@ -16,10 +16,11 @@ import contentful from 'contentful-management';
 // console.log(process.env.FILES_CHANGED);
 
 // get files changed
-const regx = new RegExp('^docs\/.*')
-let files = process.env.FILES_CHANGED.split(' ');
-console.log('Before filter: \n', files);
-files = files.filter(str => regx.test(str))
+const regx = /'^docs\/.*'/
+let files = process.env.FILES_CHANGED.split(' ').map(str => {
+  return str.replace(/^"(.+(?="$))"$/, '$1'); // remove quotesaround a string
+});
+files = files.filter(str => regx.test(str));
 console.log('Filtered files: \n', files);
 
 // set up client 
