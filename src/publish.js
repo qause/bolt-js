@@ -15,15 +15,16 @@ import contentful from 'contentful-management';
 // console.log(process.env.EVENT);
 // console.log(process.env.FILES_CHANGED);
 
-// get files changed
-const regx = /^docs\/.*/
-console.log('process.env.FILES_CHANGED: ', process.env.FILES_CHANGED);
+// get files changed / updated
 let files = process.env.FILES_CHANGED
-  .replace(/^"(.+(?="$))"$/, '$1')
-  .split(' ');
-console.log('Before:', files);
-files = files.filter(str => regx.test(str));
+  .replace(/^"(.+(?="$))"$/, '$1') // remove quotes
+  .split(' ') 
+  .filter(str => /^docs\/.*/.test(str)); // filter for docs changes
 console.log('Filtered files: \n', files);
+
+// pull each of the files updated 
+
+ 
 
 // set up client 
 const client = contentful.createClient({
