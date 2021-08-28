@@ -18,9 +18,9 @@ import contentful from 'contentful-management';
 // get files changed
 const regx = /'^docs\/.*'/
 console.log('process.env.FILES_CHANGED: ', process.env.FILES_CHANGED);
-let files = process.env.FILES_CHANGED.split(' ').map(str => {
-  return str.replace(/^"(.+(?="$))"$/, '$1'); // remove quotesaround a string
-});
+let files = process.env.FILES_CHANGED.str
+  .replace(/^"(.+(?="$))"$/, '$1')
+  .split(' ');
 console.log('Before:', files);
 files = files.filter(str => regx.test(str));
 console.log('Filtered files: \n', files);
