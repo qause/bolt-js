@@ -18,7 +18,7 @@ import contentful from 'contentful-management';
 // get files changed
 const regx = /'^docs\/.*'/
 console.log('process.env.FILES_CHANGED: ', process.env.FILES_CHANGED);
-let files = process.env.FILES_CHANGED.str
+let files = process.env.FILES_CHANGED
   .replace(/^"(.+(?="$))"$/, '$1')
   .split(' ');
 console.log('Before:', files);
