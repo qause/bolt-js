@@ -27,3 +27,4 @@ Here is a test change
 Here is a second test change
 Weird
 Handles double quotes
+Handles double quotes?
