@@ -22,7 +22,7 @@ let files = process.env.FILES_CHANGED
   .filter(str => /^docs\/.*/.test(str)); // filter for docs changes
 console.log('Filtered files: \n', files);
 
-// pull each of the files updated 
+// attempt to pull each of the files updated 
 
  
 
