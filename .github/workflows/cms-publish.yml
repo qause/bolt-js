@@ -42,7 +42,7 @@ jobs:
           do
           echo "$i"
           done 
-          echo "::set-output name=files::$filearr"
+          echo "::set-output name=files::${filearr}"
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 

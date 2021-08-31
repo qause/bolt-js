@@ -17,6 +17,7 @@ import contentful from 'contentful-management';
 
 // get files changed / updated
 console.log('here are the: ', process.env.FILES_CHANGED);
+console.log('size of the: ', process.env.FILES_CHANGED.length);
 // let files = process.env.FILES_CHANGED
 //   .split(' ') 
 //   .filter(str => /^docs\/.*/.test(str)); // filter for docs changes
