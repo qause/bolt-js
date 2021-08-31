@@ -37,7 +37,7 @@ jobs:
         id: getfile
         run: |
           IFS=" "  
-          read -ra FILES <<< "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
+          read -ra FILES <<< $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
           echo "::set-output name=files::$FILES"
       - name: Runs the publish script
         env: 
@@ -47,5 +47,5 @@ jobs:
           ACTOR: ${{ github.actor }}
           REPOSITORY: ${{ github.repository }}
           EVENT: ${{ toJson(github.event) }}
-          FILES_CHANGED: ${{ steps.getfile.outputs.files }}
+          FILES_CHANGED: ${{ toJson(steps.getfile.outputs.files) }}
         run: npm run publish
