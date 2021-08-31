@@ -30,6 +30,7 @@ let paths = process.env.FILES_CHANGED
 console.log('Filtered files: \n', paths);
 readData(paths);
 
+// pull changed docs and read them into memory
 async function readData(fPaths) {
   let fileData = {};
   for (const path of fPaths) {
@@ -44,9 +45,9 @@ async function readData(fPaths) {
   return fileData;
 }
 
-// pull changed docs and read them into memory
-
 // create the Page object
+
+
 // publish to contentful with the client
 
 // set up client 
