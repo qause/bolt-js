@@ -21,13 +21,3 @@ Fix
 Add git config
 Pipe
 adjust fetch depth
-
-Testing files changed
-Here is a test change
-Here is a second test change
-Weird
-Tests out the bash shell manup
-MOre
-22
-Trigger2
-stuffmore
