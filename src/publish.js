@@ -22,9 +22,10 @@ console.log('here are the: ', process.env.FILES_CHANGED);
 //   .filter(str => /^docs\/.*/.test(str)); // filter for docs changes
 // console.log('Filtered files: \n', files);
 
-// attempt to pull each of the files updated 
-
- 
+// filter files that are docs changes
+// pull changed docs and read them into memory
+// create the Page object
+// publish to contentful with the client
 
 // set up client 
 const client = contentful.createClient({
