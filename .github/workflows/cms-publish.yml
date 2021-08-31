@@ -35,6 +35,8 @@ jobs:
       #     echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs"   
       - name: get changed files 
         id: getfile
+        outputs:
+          matrix: ${{ steps.getfile.outputs.matrix }}
         run: |
           IFS=" "  
           read -ra filearr <<< "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
@@ -42,7 +44,7 @@ jobs:
           do
           echo "$i"
           done 
-          echo "::set-output name=files::${filearr}"
+          echo "::set-output name=matrix::${filearr}"
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 
@@ -51,5 +53,5 @@ jobs:
           ACTOR: ${{ github.actor }}
           REPOSITORY: ${{ github.repository }}
           EVENT: ${{ toJson(github.event) }}
-          FILES_CHANGED: ${{ steps.getfile.outputs.files }}
+          FILES_CHANGED: ${{ fromJson(steps.getfile.outputs.matrix) }}
         run: npm run publish
