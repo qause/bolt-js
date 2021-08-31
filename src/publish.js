@@ -7,7 +7,6 @@
  */
 // import 'dotenv/config';
 import contentful from 'contentful-management';
-import * as core from '@actions/core';
 import fs from 'fs';
 
 // has variables
