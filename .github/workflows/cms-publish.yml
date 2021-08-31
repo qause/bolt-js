@@ -35,8 +35,6 @@ jobs:
       #     echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs"   
       - name: get changed files 
         id: getfile
-        outputs:
-          matrix: ${{ steps.getfile.outputs.matrix }}
         run: |
           IFS=" "  
           read -ra filearr <<< "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
