@@ -16,8 +16,9 @@ import contentful from 'contentful-management';
 // console.log(process.env.FILES_CHANGED);
 
 // get files changed / updated
+console.log('here are the: ', process.env.FILES_CHANGED);
 let files = process.env.FILES_CHANGED
-  .replace(/^"(.+(?="$))"$/, '$1') // remove quotes
+  // .replace(/^"(.+(?="$))"$/, '$1') // remove quotes
   .split(' ') 
   .filter(str => /^docs\/.*/.test(str)); // filter for docs changes
 console.log('Filtered files: \n', files);
