@@ -37,7 +37,7 @@ jobs:
         id: getfile
         run: |
           IFS=" "  
-          read -ra filearr <<< "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
+          read -ra filearr <<< "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
           echo $filearr
           echo "::set-output name=files::$filearr"
       - name: Runs the publish script
