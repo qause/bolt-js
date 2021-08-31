@@ -51,5 +51,5 @@ jobs:
           ACTOR: ${{ github.actor }}
           REPOSITORY: ${{ github.repository }}
           EVENT: ${{ toJson(github.event) }}
-          FILES_CHANGED: ${{ fromJson(toJSon(steps.getfile.outputs.files)) }}
+          FILES_CHANGED: ${{ fromJson(toJson(steps.getfile.outputs.files)) }}
         run: npm run publish
