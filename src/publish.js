@@ -17,11 +17,10 @@ import contentful from 'contentful-management';
 
 // get files changed / updated
 console.log('here are the: ', process.env.FILES_CHANGED);
-let files = process.env.FILES_CHANGED
-  // .replace(/^"(.+(?="$))"$/, '$1') // remove quotes
-  .split(' ') 
-  .filter(str => /^docs\/.*/.test(str)); // filter for docs changes
-console.log('Filtered files: \n', files);
+// let files = process.env.FILES_CHANGED
+//   .split(' ') 
+//   .filter(str => /^docs\/.*/.test(str)); // filter for docs changes
+// console.log('Filtered files: \n', files);
 
 // attempt to pull each of the files updated 
 

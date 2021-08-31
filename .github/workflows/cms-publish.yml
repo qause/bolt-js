@@ -29,10 +29,16 @@ jobs:
         run: |
           git config user.name "Content Management Bot"
           git config user.email "<>"
-      - name: get changed files
+      # - name: get changed files (orig)
+      #   id: getfile
+      #   run: |
+      #     echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"   
+      - name: get changed files 
         id: getfile
         run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"   
+          IFS=" "  
+          read -ra FILES <<< "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
+          echo "::set-output name=files::$FILES"
       - name: Runs the publish script
         env: 
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 

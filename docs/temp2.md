@@ -26,3 +26,4 @@ Testing files changed
 Here is a test change
 Here is a second test change
 Weird
+Tests out the bash shell manup
