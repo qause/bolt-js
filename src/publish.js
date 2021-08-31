@@ -8,44 +8,73 @@
 // import 'dotenv/config';
 import contentful from 'contentful-management';
 import fs from 'fs';
+import marked from 'marked';
 
 // has variables
 // console.log(process.env.SHA);
 // console.log(process.env.ACTOR);
 // console.log(process.env.REPOSITORY);
-// console.log(process.env.EVENT);
-// console.log(process.env.FILES_CHANGED);
 
-// get files changed / updated
-// console.log('here are the: ', process.env.FILES_CHANGED);
-// console.log('size of the: ', process.env.FILES_CHANGED.length);
-// console.log(typeof process.env.FILES_CHANGED);
-// for (let ele of process.env.FILES_CHANGED) {
-//   console.log(ele);
-// }
 let paths = process.env.FILES_CHANGED
   .split(' ') 
-  .filter(str => /^docs\/.*/.test(str)); // /docs/* only
-console.log('Filtered files: \n', paths);
-readData(paths);
+  .filter(str => /^docs\/.*/.test(str)); // docs/* changed files only
 
-// pull changed docs and read them into memory
+let files = readData(paths);
+files.forEach((value, key) => { 
+  // parse the front matter from the content
+  let parsedFileContents = parse(value);
+  
+  console.log(parsedFileContents.frontMatter);
+});
+
+// pull changed docs
 async function readData(fPaths) {
-  let fileData = {};
+  let fileData = new Map();
   for (const path of fPaths) {
     try {
-      let data = await fs.promises.readFile(path);
-      fileData[path] = data;
+      let data = await fs.promises.readFile(path, 'utf8');
+      fileData.set(path, data);
     } catch (err) {
-      fileData[path] = null;
+      fileData.set(path, null);
     }
   }
   console.log(fileData);
   return fileData;
 }
 
-// create the Page object
+// returns obj with front matter + page content separate
+const parse = (data) => {
+  const lexed = marked.lexer(data);
+  const frontMatter = {};
+  if (hasFrontMatter(lexed)) {
+    let split = lexed[1]['raw'].split('\n');
+    for (const entry of split) {
+      let [key, value] = entry.split(':');
+      frontMatter[key] = value.trim();
+    }
+  }
+  const content = lexed.filter((val, i) => i !== 0 && i !== 1 && i !== 2); 
+  return {
+    frontMatter,
+    content
+  }
+}
 
+const TYPES = Object.freeze({
+  hr: "hr",
+  space: "space",
+  code: "code",
+  paragraph: "paragraph"
+});
+
+// returns true if the document has horizontal rule delineated front matter
+const hasFrontMatter = (lexed) => {
+  return ((lexed)[0] && lexed[2] && lexed[0]["type"] === TYPES.hr && lexed[2]["type"] === TYPES.hr);
+}
+
+// for each piece of data
+  // instantiate an object
+  // fill out the Page object
 
 // publish to contentful with the client
 
