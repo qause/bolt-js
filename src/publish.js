@@ -20,22 +20,22 @@ let paths = process.env.FILES_CHANGED
   .filter(str => /^docs\/.*/.test(str)); // docs/* changed files only
 
 let files = readData(paths);
-files.forEach((value, key) => { 
+for (const value in files) { 
   // parse the front matter from the content
   let parsedFileContents = parse(value);
   
   console.log(parsedFileContents.frontMatter);
-});
+}
 
 // pull changed docs
 async function readData(fPaths) {
-  let fileData = new Map();
+  let fileData = {};
   for (const path of fPaths) {
     try {
       let data = await fs.promises.readFile(path, 'utf8');
-      fileData.set(path, data);
+      fileData[path] = data;
     } catch (err) {
-      fileData.set(path, null);
+      fileData[path] = null;
     }
   }
   console.log(fileData);
