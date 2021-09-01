@@ -2,7 +2,7 @@
 title: Sending messages
 lang: en
 slug: message-sending
-order: 2
+order: 3
 ---
 
 <div class="section-content">
