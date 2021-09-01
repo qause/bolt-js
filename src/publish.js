@@ -82,4 +82,4 @@ const hasFrontMatter = (lexed) => {
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_KEY
 });
-console.log('TEST: HAS CLIENT', client);
+// console.log('TEST: HAS CLIENT', client);
