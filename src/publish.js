@@ -19,19 +19,23 @@ let paths = process.env.FILES_CHANGED
   .split(' ') 
   .filter(str => /^docs\/.*/.test(str)); // docs/* changed files only
 
-let files = readData(paths);
-Object.keys(files).forEach(fPath => {
-  console.log('current file: ', fPath);
-  let fContent = files[fPath];
-  let { frontMatter } = parse(fContent);
-  console.log('here is the frontMatter: ', frontMatter);
+publish();
 
-  // referenceId
-  // locale
-  // source
-  // markdown
-  // author
-})   
+async function publish() {
+  let files = await readData(paths);
+  Object.keys(files).forEach(fPath => {
+    console.log('current file: ', fPath);
+    let fContent = files[fPath];
+    let { frontMatter } = parse(fContent);
+    console.log('here is the frontMatter: ', frontMatter);
+  
+    // referenceId
+    // locale
+    // source
+    // markdown
+    // author
+  })   
+}
 
 // pull changed docs
 async function readData(fPaths) {
@@ -44,7 +48,7 @@ async function readData(fPaths) {
       fileData[path] = null;
     }
   }
-  console.log(fileData);
+  // console.log(fileData);
   return fileData;
 }
 
