@@ -38,7 +38,6 @@ async function readData(fPaths) {
       fileData[path] = null;
     }
   }
-  console.log(fileData);
   return fileData;
 }
 
