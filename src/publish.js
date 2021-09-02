@@ -131,3 +131,18 @@ const TYPES = Object.freeze({
 const hasFrontMatter = (lexed) => {
   return ((lexed)[0] && lexed[2] && lexed[0]["type"] === TYPES.hr && lexed[2]["type"] === TYPES.hr);
 }
+
+
+/* 
+
+TODO
+- can create a new Page ✅
+- can delete an existing Page ✅
+- can update an existing Page 
+- when doc is renamed (i.e new ref ID)
+  - can create new Page
+  - can delete existing Page
+- can update Authors field correctly
+- can create, delete, update i.e. handle a JP language Page
+
+*/
