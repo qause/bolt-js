@@ -12,14 +12,14 @@ import marked from 'marked';
 // set up plain scoped client 
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_KEY
-},
+}/* ,
 {
   type: 'plain',
   defaults: {
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     environmentId: process.env.CONTENTFUL_ENV_ID,
   },
-});
+} */);
 console.log('CLIENT INIT: ', client);
 
 let paths = process.env.FILES_CHANGED
@@ -31,9 +31,10 @@ publishToCms();
 async function publishToCms() {
   // read data from changed files 
   let files = await readData(paths);
-  Object.keys(files).forEach(fPath => {
-    let fContent = files[fPath];
-    let refId = `${process.env.REPOSITORY}/${fPath}`;
+  let fPaths = Object.keys(files);
+  for (const path of fPaths) {
+    let fContent = files[path];
+    let refId = `${process.env.REPOSITORY}/${path}`;
     // attempt to fetch an existing entry
 
     // if change is content associated with the changed file
@@ -44,7 +45,6 @@ async function publishToCms() {
         try {
           let res = await client.environment.createWithId('page', refId, { 
             fields: {
-              id: refId,
               source: `https://github.com/${process.env.REPOSITORY}/${fPath}`,
               locale: frontMatter['lang'],
               author: [process.env.ACTOR],  
@@ -59,7 +59,7 @@ async function publishToCms() {
       // is content associated with a deleted or renamed file
       // then deletes or archives it
     }
-  })   
+  }
 }
 
 // pull changed docs

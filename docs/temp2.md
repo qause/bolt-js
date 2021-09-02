@@ -2,7 +2,7 @@
 title: Listening to messages
 lang: en
 slug: message-listening
-order: 4
+order: 2
 ---
 
 <div class="section-content">
