@@ -36,7 +36,8 @@ async function publishToCms() {
   let fPaths = Object.keys(files);
   for (const path of fPaths) {
     let fContent = files[path];
-    let refId = `${process.env.REPOSITORY}-${path}`.replace('/', '-');
+    let refId = `${process.env.REPOSITORY}__${path}`
+    refId = refId.replace('/', '_');
     console.log('REF ID IS:', refId);
     // attempt to fetch an existing entry
 
@@ -45,32 +46,32 @@ async function publishToCms() {
       console.log('content not null!')
       let { frontMatter } = parse(fContent);
         // create entry
-        // try {
-        //   let res = await client.entry.createWithId('page', refId, { 
-          //   fields: {
-          //     source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
-          //     locale: frontMatter['lang'],
-          //     markdown: fContent,
-          //   }
-          // })
-        //   console.log('SUCCESS RES:', res);
-        // } catch (error) {
-        //   console.log('ERR', error);
-        // }
-        client.getSpace(spaceId)
-          .then((space) => space.getEnvironment(envId))
-          .then((environment) => environment.createEntry('page', {
+        try {
+          let res = await client.entry.createWithId('page', refId, { 
             fields: {
-              source: {
-                'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`
-              },
-              markdown: {
-                'en-US': fContent
-              },
+              source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
+              locale: frontMatter['lang'],
+              markdown: fContent,
             }
-        }))
-          .then((entry) => console.log(entry))
-          .catch((error) => console.log(error))
+          })
+          console.log('SUCCESS RES:', res);
+        } catch (error) {
+          console.log('ERR', error);
+        }
+        // client.getSpace(spaceId)
+        //   .then((space) => space.getEnvironment(envId))
+        //   .then((environment) => environment.createEntry('page', {
+        //     fields: {
+        //       source: {
+        //         'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`
+        //       },
+        //       markdown: {
+        //         'en-US': fContent
+        //       },
+        //     }
+        // }))
+        //   .then((entry) => console.log(entry))
+        //   .catch((error) => console.log(error))
     } else {
       // is content associated with a deleted or renamed file
       // then deletes or archives it
