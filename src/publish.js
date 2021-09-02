@@ -20,7 +20,6 @@ const client = contentful.createClient({
     environmentId: process.env.CONTENTFUL_ENV_ID,
   },
 });
-console.log('CLIENT INIT: ', client);
 
 let paths = process.env.FILES_CHANGED
   .split(' ') 
@@ -45,7 +44,7 @@ async function publishToCms() {
         try {
           let res = await client.environment.createWithId('page', refId, { 
             fields: {
-              source: `https://github.com/${process.env.REPOSITORY}/${fPath}`,
+              source: `https://github.com/${process.env.REPOSITORY}/${path}`,
               locale: frontMatter['lang'],
               author: [process.env.ACTOR],  
               markdown: fContent,
