@@ -62,7 +62,7 @@ async function publishToCms() {
         .catch((error) => console.log(error))
     } else {
       // content associated with a deleted or renamed file
-      // TODO: delete or archive?
+      // TODO: should delete or archive?
       client.getSpace(spaceId)
         .then(space => space.getEnvironment(envId))
         .then(environment => environment.deleteEntry(refId))
@@ -95,7 +95,6 @@ async function readData(fPaths) {
       let data = await fs.promises.readFile(path, 'utf8');
       fileData[path] = data;
     } catch (err) {
-      console.log('inside read data - there was no data associated with', path);
       fileData[path] = null;
     }
   }
@@ -120,6 +119,7 @@ const parse = (data) => {
   }
 }
 
+// utility object with lexed types data
 const TYPES = Object.freeze({
   hr: "hr",
   space: "space",
