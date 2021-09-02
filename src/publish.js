@@ -5,35 +5,60 @@
   - Accomplishes a simple update action 
   - Runs a secondary parse script
  */
-// import 'dotenv/config';
 import contentful from 'contentful-management';
 import fs from 'fs';
 import marked from 'marked';
 
-// has variables
-// console.log(process.env.SHA);
-// console.log(process.env.ACTOR);
-// console.log(process.env.REPOSITORY);
+// set up plain scoped client 
+const client = contentful.createClient({
+  accessToken: process.env.CONTENTFUL_API_KEY
+},
+{
+  type: 'plain',
+  defaults: {
+    spaceId: process.env.CONTENTFUL_SPACE_ID,
+    environmentId: process.env.CONTENTFUL_ENV_ID,
+  },
+});
+console.log('CLIENT INIT: ', client);
 
 let paths = process.env.FILES_CHANGED
   .split(' ') 
   .filter(str => /^docs\/.*/.test(str)); // docs/* changed files only
 
-publish();
+publishToCms();
 
-async function publish() {
+async function publishToCms() {
+  // read data from changed files 
   let files = await readData(paths);
   Object.keys(files).forEach(fPath => {
-    console.log('current file: ', fPath);
     let fContent = files[fPath];
-    let { frontMatter } = parse(fContent);
-    console.log('here is the frontMatter: ', frontMatter);
-  
-    // referenceId
-    // locale
-    // source
-    // markdown
-    // author
+    let refId = `${process.env.REPOSITORY}/${fPath}`;
+    // attempt to fetch an existing entry
+
+    // if change is content associated with the changed file
+    if (fContent !== null) {
+      console.log('content not null!')
+      let { frontMatter } = parse(fContent);
+        // create entry
+        try {
+          let res = await client.environment.createWithId('page', refId, { 
+            fields: {
+              id: refId,
+              source: `https://github.com/${process.env.REPOSITORY}/${fPath}`,
+              locale: frontMatter['lang'],
+              author: [process.env.ACTOR],  
+              markdown: fContent,
+            }
+          })
+          console.log('SUCCESS RES:', res);
+        } catch (error) {
+          console.log('ERR', err);
+        }
+    } else {
+      // is content associated with a deleted or renamed file
+      // then deletes or archives it
+    }
   })   
 }
 
@@ -82,12 +107,6 @@ const TYPES = Object.freeze({
 const hasFrontMatter = (lexed) => {
   return ((lexed)[0] && lexed[2] && lexed[0]["type"] === TYPES.hr && lexed[2]["type"] === TYPES.hr);
 }
-
-// set up client 
-const client = contentful.createClient({
-  accessToken: process.env.CONTENTFUL_API_KEY
-});
-// console.log('TEST: HAS CLIENT', client);
 
 
 // publish to contentful with the client
