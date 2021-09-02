@@ -23,6 +23,9 @@ jobs:
           fetch-depth: 0
       - name: sets up nodejs runtime
         uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+          cache: 'npm'
       - name: install deps
         run: npm install
       - name: setup git config
