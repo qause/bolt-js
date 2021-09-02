@@ -62,12 +62,8 @@ async function publishToCms() {
           .then((space) => space.getEnvironment(envId))
           .then((environment) => environment.createEntry('page', refId, {
             fields: {
-              source: {
-                'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`
-              },
-              markdown: {
-                'en-US': fContent
-              },
+              source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
+              markdown: fContent,
             }
         }))
           .then((entry) => console.log(entry))
