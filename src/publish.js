@@ -60,10 +60,13 @@ async function publishToCms() {
         // }
         client.getSpace(spaceId)
           .then((space) => space.getEnvironment(envId))
-          .then((environment) => environment.createEntry('page', refId, {
+          .then((environment) => environment.createEntryWithId('page', refId, {
             fields: {
+              source: {
+                'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
+              },
               markdown: {
-                "en-US": 'here is some content'
+                'en-US': fContent
               },
             }
         }))
