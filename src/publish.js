@@ -9,60 +9,42 @@ import contentful from 'contentful-management';
 import fs from 'fs';
 import marked from 'marked';
 
-// set up plain scoped client 
+// init client
 const spaceId = 'lfws4sw3zx32';
 const envId = 'master';
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_KEY
-}/* ,
-{
-  type: 'plain',
-  defaults: {
-    spaceId: process.env.CONTENTFUL_SPACE_ID,
-    environmentId: process.env.CONTENTFUL_ENV_ID,
-  },
-} */);
-console.log(client)
-
-let paths = process.env.FILES_CHANGED
-  .split(' ') 
-  .filter(str => /^docs\/.*/.test(str)); // docs/* changed files only
+});
 
 publishToCms();
 
-async function publishToCms() {
-  // read data from changed files 
-  let files = await readData(paths);
-  let fPaths = Object.keys(files);
-  for (const path of fPaths) {
-    let fContent = files[path];
-    let refId = `${process.env.REPOSITORY}__${path}`
-    refId = refId.replaceAll('/', '_')
-    console.log('REF ID IS:', refId);
-    // attempt to fetch an existing entry
+/* 
+  returns a formatted reference id:
+  in format of <org>_<repo>__docs_<filename>
+  i.e. slackapi_bolt-js__docs_mydoc.md
+*/ 
+function formatRefId(path) {
+  let refId = `${process.env.REPOSITORY}__${path}`
+  return refId.replaceAll('/', '_') // CMS accepts _, - or . in ids
+}
 
-    // if change is content associated with the changed file
+async function publishToCms() {
+  const allChangedFiles = await readData(getPaths());
+  const fPaths = Object.keys(allChangedFiles);
+  for (const path of fPaths) {
+    const fContent = allChangedFiles[path];
+    const refId = formatRefId(path);
+    // attempt to fetch the existing entry
+
+    // creates entry if changed file has content
     if (fContent !== null) {
-      console.log('content not null!')
-      let { frontMatter } = parse(fContent);
-        // create entry
-        // try {
-        //   let res = await client.entry.createWithId('page', refId, { 
-        //     fields: {
-        //       source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
-        //       locale: frontMatter['lang'],
-        //       markdown: fContent,
-        //     }
-        //   })
-        //   console.log('SUCCESS RES:', res);
-        // } catch (error) {
-        //   console.log('ERR', error);
-        // }
+      const { frontMatter } = parse(fContent);
         client.getSpace(spaceId)
           .then((space) => space.getEnvironment(envId))
           .then((environment) => environment.createEntryWithId('page', refId, {
             fields: {
               source: {
+                // TODO: logic to handle ja-JP locale
                 'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
               },
               markdown: {
@@ -73,13 +55,22 @@ async function publishToCms() {
           .then((entry) => console.log(entry))
           .catch((error) => console.log(error))
     } else {
+      console.log(`no content, ${path} deleted?`)
       // is content associated with a deleted or renamed file
       // then deletes or archives it
     }
   }
 }
 
-// pull changed docs
+// returns changed filepaths including docs/* only
+function getPaths() {
+  return process.env.FILES_CHANGED
+  .split(' ') 
+  .filter(str => /^docs\/.*/.test(str)); 
+}
+
+// accepts an array of paths and returns an object where
+// key is filepath and value is the associated file data
 async function readData(fPaths) {
   let fileData = {};
   for (const path of fPaths) {
@@ -87,10 +78,10 @@ async function readData(fPaths) {
       let data = await fs.promises.readFile(path, 'utf8');
       fileData[path] = data;
     } catch (err) {
+      console.log('inside read data - there was no data associated with', path);
       fileData[path] = null;
     }
   }
-  // console.log(fileData);
   return fileData;
 }
 
@@ -123,6 +114,3 @@ const TYPES = Object.freeze({
 const hasFrontMatter = (lexed) => {
   return ((lexed)[0] && lexed[2] && lexed[0]["type"] === TYPES.hr && lexed[2]["type"] === TYPES.hr);
 }
-
-
-// publish to contentful with the client
