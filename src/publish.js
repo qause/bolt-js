@@ -47,7 +47,7 @@ async function publishToCms() {
               'en-US': frontMatter['title']
             },
             author: {
-              'en-US': process.env.AUTHOR
+              'en-US': [process.env.AUTHOR]
             },
             source: {
               // TODO: logic to handle ja-JP locale
