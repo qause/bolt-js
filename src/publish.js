@@ -42,11 +42,10 @@ async function publishToCms() {
       let { frontMatter } = parse(fContent);
         // create entry
         try {
-          let res = await client.environment.createWithId('page', refId, { 
+          let res = await client.environment.createEntryWIthId('page', refId, { 
             fields: {
-              source: `https://github.com/${process.env.REPOSITORY}/${path}`,
+              source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
               locale: frontMatter['lang'],
-              author: [process.env.ACTOR],  
               markdown: fContent,
             }
           })
@@ -81,7 +80,6 @@ const parse = (data) => {
   const lexed = marked.lexer(data);
   const frontMatter = {};
   if (hasFrontMatter(lexed)) {
-    console.log('it has front matter!');
     let split = lexed[1]['raw'].split('\n');
     for (const entry of split) {
       let [key, value] = entry.split(':');
