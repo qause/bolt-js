@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: '15'
           cache: 'npm'
+          cache-dependency-path: subdir/package-lock.json
       - name: install deps
         run: npm install
       - name: setup git config
