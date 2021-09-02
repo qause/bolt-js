@@ -10,6 +10,8 @@ import fs from 'fs';
 import marked from 'marked';
 
 // set up plain scoped client 
+const spaceId = 'lfws4sw3zx32';
+const envId = 'master';
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_KEY
 }/* ,
@@ -34,7 +36,8 @@ async function publishToCms() {
   let fPaths = Object.keys(files);
   for (const path of fPaths) {
     let fContent = files[path];
-    let refId = `${process.env.REPOSITORY}/${path}`;
+    let refId = `${process.env.REPOSITORY}-${path}`.replace('/', '-');
+    console.log('REF ID IS:', refId);
     // attempt to fetch an existing entry
 
     // if change is content associated with the changed file
@@ -54,18 +57,18 @@ async function publishToCms() {
         // } catch (error) {
         //   console.log('ERR', error);
         // }
-        client.getSpace('lfws4sw3zx32')
-          .then((space) => space.getEnvironment('master'))
-          .then((environment) => environment.createEntryWithId('page', refId, {
-              fields: {
-                source: {
-                  'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`
-                },
-                markdown: {
-                  'en-US': fContent
-                },
-              }
-          }))
+        client.getSpace(spaceId)
+          .then((space) => space.getEnvironment(envId))
+          .then((environment) => environment.createEntry('page', {
+            fields: {
+              source: {
+                'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`
+              },
+              markdown: {
+                'en-US': fContent
+              },
+            }
+        }))
           .then((entry) => console.log(entry))
           .catch((error) => console.log(error))
     } else {
