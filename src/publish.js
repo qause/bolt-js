@@ -36,8 +36,8 @@ async function publishToCms() {
   let fPaths = Object.keys(files);
   for (const path of fPaths) {
     let fContent = files[path];
-    let refId = `${process.env.REPOSITORY}`
-    refId = refId.replace('/', '_');
+    let refId = `${process.env.REPOSITORY}__${path}`
+    refId = refId.replaceAll('/', '_')
     console.log('REF ID IS:', refId);
     // attempt to fetch an existing entry
 
