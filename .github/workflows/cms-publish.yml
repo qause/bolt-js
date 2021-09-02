@@ -50,7 +50,7 @@ jobs:
           CONTENTFUL_API_KEY: ${{ secrets.CONTENTFUL_API_KEY }} 
           TOKEN: ${{ secrets.TOKEN }}
           SHA: ${{ github.sha }}
-          ACTOR: ${{ github.actor }}
+          AUTHOR: ${{ github.actor }}
           REPOSITORY: ${{ github.repository }}
           EVENT: ${{ toJson(github.event) }}
           FILES_CHANGED: ${{ steps.getfile.outputs.files }}

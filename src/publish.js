@@ -39,27 +39,44 @@ async function publishToCms() {
     // creates entry if changed file has content
     if (fContent !== null) {
       const { frontMatter } = parse(fContent);
-        client.getSpace(spaceId)
-          .then((space) => space.getEnvironment(envId))
-          .then((environment) => environment.createEntryWithId('page', refId, {
-            fields: {
-              source: {
-                // TODO: logic to handle ja-JP locale
-                'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
-              },
-              markdown: {
-                'en-US': fContent
-              },
-            }
+      client.getSpace(spaceId)
+        .then((space) => space.getEnvironment(envId))
+        .then((environment) => environment.createEntryWithId('page', refId, {
+          fields: {
+            title: {
+              'en-US': frontMatter['title']
+            },
+            author: {
+              'en-US': process.env.AUTHOR
+            },
+            source: {
+              // TODO: logic to handle ja-JP locale
+              'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
+            },
+            markdown: {
+              'en-US': fContent
+            },
+          }
         }))
-          .then((entry) => console.log(entry))
-          .catch((error) => console.log(error))
+        .then((entry) => console.log(entry))
+        .catch((error) => console.log(error))
     } else {
-      console.log(`no content, ${path} deleted?`)
-      // is content associated with a deleted or renamed file
-      // then deletes or archives it
+      // content associated with a deleted or renamed file
+      // TODO: delete or archive?
+      client.getSpace(spaceId)
+        .then(space => space.getEnvironment(envId))
+        .then(environment => environment.deleteEntry(refId))
+        .catch(error => {
+          console.log('DELETE ERROR: ', error)
+        })
     }
   }
+}
+
+// returns an object of type Page
+function formatPage() {
+  // TODO: Implement
+  return;
 }
 
 // returns changed filepaths including docs/* only
