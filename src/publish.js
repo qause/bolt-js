@@ -12,14 +12,14 @@ import marked from 'marked';
 // set up plain scoped client 
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_KEY
-}/* ,
+},
 {
   type: 'plain',
   defaults: {
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     environmentId: process.env.CONTENTFUL_ENV_ID,
   },
-} */);
+});
 console.log('CLIENT INIT: ', client);
 
 let paths = process.env.FILES_CHANGED
@@ -53,7 +53,7 @@ async function publishToCms() {
           })
           console.log('SUCCESS RES:', res);
         } catch (error) {
-          console.log('ERR', err);
+          console.log('ERR', error);
         }
     } else {
       // is content associated with a deleted or renamed file
