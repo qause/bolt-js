@@ -54,8 +54,8 @@ async function publishToCms() {
         // } catch (error) {
         //   console.log('ERR', error);
         // }
-        client.getSpace(process.env.CONTENTFUL_SPACE_ID)
-          .then((space) => space.getEnvironment(process.env.CONTENTFUL_ENVIRONMENT_ID))
+        client.getSpace('lfws4sw3zx32')
+          .then((space) => space.getEnvironment('master'))
           .then((environment) => environment.createEntryWithId('page', refId, {
               fields: {
                 source: {
