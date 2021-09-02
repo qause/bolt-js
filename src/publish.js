@@ -12,14 +12,15 @@ import marked from 'marked';
 // set up plain scoped client 
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_API_KEY
-},
+}/* ,
 {
   type: 'plain',
   defaults: {
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     environmentId: process.env.CONTENTFUL_ENV_ID,
   },
-});
+} */);
+console.log(client)
 
 let paths = process.env.FILES_CHANGED
   .split(' ') 
@@ -41,18 +42,32 @@ async function publishToCms() {
       console.log('content not null!')
       let { frontMatter } = parse(fContent);
         // create entry
-        try {
-          let res = await client.entry.createWithId('page', refId, { 
-            fields: {
-              source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
-              locale: frontMatter['lang'],
-              markdown: fContent,
-            }
-          })
-          console.log('SUCCESS RES:', res);
-        } catch (error) {
-          console.log('ERR', error);
-        }
+        // try {
+        //   let res = await client.entry.createWithId('page', refId, { 
+          //   fields: {
+          //     source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
+          //     locale: frontMatter['lang'],
+          //     markdown: fContent,
+          //   }
+          // })
+        //   console.log('SUCCESS RES:', res);
+        // } catch (error) {
+        //   console.log('ERR', error);
+        // }
+        client.getSpace(process.env.CONTENTFUL_SPACE_ID)
+          .then((space) => space.getEnvironment(process.env.CONTENTFUL_ENVIRONMENT_ID))
+          .then((environment) => environment.createEntryWithId('page', refId, {
+              fields: {
+                source: {
+                  'en-US': `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`
+                },
+                markdown: {
+                  'en-US': fContent
+                },
+              }
+          }))
+          .then((entry) => console.log(entry))
+          .catch((error) => console.log(error))
     } else {
       // is content associated with a deleted or renamed file
       // then deletes or archives it
