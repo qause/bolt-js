@@ -42,7 +42,7 @@ async function publishToCms() {
       let { frontMatter } = parse(fContent);
         // create entry
         try {
-          let res = await client.environment.createEntryWIthId('page', refId, { 
+          let res = await client.entry.createWithId('page', refId, { 
             fields: {
               source: `https://github.com/${process.env.REPOSITORY}/blob/main/${path}`,
               locale: frontMatter['lang'],
